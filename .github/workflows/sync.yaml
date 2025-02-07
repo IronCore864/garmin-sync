@@ -4,9 +4,6 @@ on:
   workflow_dispatch:
   schedule:
     - cron: "0 */24 * * *"
-  push:
-    branches:
-      - main
 
 jobs:
   sync:
@@ -23,7 +20,7 @@ jobs:
         run: uv python install
 
       - name: Install dependencies
-        run: uv install
+        run: uv sync
 
       - name: Sync
         env:
