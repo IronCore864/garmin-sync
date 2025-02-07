@@ -22,6 +22,9 @@ jobs:
       - name: Set up Python
         run: uv python install
 
+      - name: Install dependencies
+        run: uv install
+
       - name: Sync
         env:
           GARMIN_CN_EMAIL: ${{ secrets.GARMIN_CN_EMAIL }}
