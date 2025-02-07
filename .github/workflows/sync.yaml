@@ -1,0 +1,32 @@
+name: Sync
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 */24 * * *"
+  push:
+    branches:
+      - main
+
+jobs:
+  sync:
+    name: python
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+
+      - name: Set up Python
+        run: uv python install
+
+      - name: Sync
+        env:
+          GARMIN_CN_EMAIL: ${{ secrets.GARMIN_CN_EMAIL }}
+          GARMIN_CN_PASSWORD: ${{ secrets.GARMIN_CN_PASSWORD }}
+          GARMIN_GLOBAL_EMAIL: ${{ secrets.GARMIN_GLOBAL_EMAIL }}
+          GARMIN_GLOBAL_PASSWORD: ${{ secrets.GARMIN_GLOBAL_PASSWORD }}
+        run: |
+          python main.py
