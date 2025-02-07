@@ -29,4 +29,4 @@ jobs:
           GARMIN_GLOBAL_EMAIL: ${{ secrets.GARMIN_GLOBAL_EMAIL }}
           GARMIN_GLOBAL_PASSWORD: ${{ secrets.GARMIN_GLOBAL_PASSWORD }}
         run: |
-          python main.py
+          uv run main.py
