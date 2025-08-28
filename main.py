@@ -15,9 +15,9 @@ cn_client = Garmin(
 cn_client.login()
 logger.info("Garmin CN login successful!")
 
-logger.info("Get latest 3 activities from Garmin CN ...")
-activities = cn_client.get_activities(0, 3)
-logger.info("Get latest 3 activities from Garmin CN done!")
+logger.info("Get latest 10 activities from Garmin CN ...")
+activities = cn_client.get_activities(0, 10)
+logger.info("Get latest 10 activities from Garmin CN done!")
 
 logger.info("Login to Garmin Global ...")
 client = Garmin(
@@ -46,5 +46,3 @@ for activity in activities:
         if "Conflict for url" in str(e):
             logger.info("Upload fail, the activity probably already exists.")
             continue
-    finally:
-        os.remove(activity_file)
