@@ -16,7 +16,7 @@ cn_client.login()
 logger.info("Garmin CN login successful!")
 
 logger.info("Get latest 10 activities from Garmin CN ...")
-activities = cn_client.get_activities(0, 10)
+activities = cn_client.get_activities(5, 8)
 logger.info("Get latest 10 activities from Garmin CN done!")
 
 logger.info("Login to Garmin Global ...")
