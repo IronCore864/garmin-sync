@@ -14,6 +14,7 @@ cn_client = Garmin(
 )
 cn_client.login()
 logger.info("Garmin CN login successful!")
+cn_client.garth.configure(timeout=30, retries=3)
 
 logger.info("Get latest 3 activities from Garmin CN ...")
 activities = cn_client.get_activities(0, 3)
@@ -27,13 +28,13 @@ client.login()
 logger.info("Garmin Global login successful!")
 
 for activity in activities:
+    activity_file = f"./{activity["activityId"]}.tcx"
     try:
         logger.info(
             f"Activity {activity['activityId']}: {activity['activityName']}, started on {activity['startTimeLocal']}"
         )
         logger.info(f"Download activity {activity['activityId']} from Garmin CN ...")
-
-        activity_bytes = cn_client.download_activity(activity["activityId"])
+        activity_bytes = cn_client.download_activity(activity["activityId"], dl_fmt=Garmin.ActivityDownloadFormat.ORIGINAL)
         activity_file = f"./{activity["activityId"]}.tcx"
         with open(activity_file, "wb") as f:
             f.write(activity_bytes)
@@ -47,4 +48,5 @@ for activity in activities:
             logger.info("Upload fail, the activity probably already exists.")
             continue
     finally:
-        os.remove(activity_file)
+        if os.path.exists(activity_file):
+            os.remove(activity_file)
