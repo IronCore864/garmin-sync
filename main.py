@@ -28,14 +28,14 @@ client.login()
 logger.info("Garmin Global login successful!")
 
 for activity in activities:
-    activity_file = f"./{activity["activityId"]}.tcx"
+    activity_file = f"./{activity["activityId"]}.fit"
     try:
         logger.info(
             f"Activity {activity['activityId']}: {activity['activityName']}, started on {activity['startTimeLocal']}"
         )
         logger.info(f"Download activity {activity['activityId']} from Garmin CN ...")
         activity_bytes = cn_client.download_activity(activity["activityId"], dl_fmt=Garmin.ActivityDownloadFormat.ORIGINAL)
-        activity_file = f"./{activity["activityId"]}.tcx"
+        activity_file = f"./{activity["activityId"]}.fit"
         with open(activity_file, "wb") as f:
             f.write(activity_bytes)
         logger.info(f"Download activity {activity['activityId']} from Garmin CN done!")
